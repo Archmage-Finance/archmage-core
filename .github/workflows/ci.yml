@@ -1,0 +1,15 @@
+name: 'CI'
+on:
+  pull_request:
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2         # checkout the repo
+      - run: npm ci                       # install packages
+      - run: npm run test:ci              # run tests
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: success() || failure()        # run this step even if previous step failed
+        with:
+          name: test-results
+          path: test-results.json
