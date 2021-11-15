@@ -8,7 +8,7 @@
     "compile": "npx hardhat compile",
     "coverage": "npx hardhat coverage",
     "test": "npx hardhat test",
-    "test:ci": "cross-env CI=true npx hardhat test > test-results.json",
+    "test:ci": "cross-env CI=true NODE_OPTIONS=--max-old-space-size=4096 npx hardhat test > test-results.json",
     "test:e2e": "cross-env ENABLE_MAINNET_FORKING=true RUN_E2E_TESTS=true npx hardhat test",
     "test:gas": "cross-env REPORT_GAS=true npx hardhat test",
     "test:all": "cross-env RUN_ALL_TESTS=true npx hardhat test",
