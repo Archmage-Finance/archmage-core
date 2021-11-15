@@ -1,0 +1,74 @@
+{
+  "name": "@archmage/archmage-core",
+  "version": "1.0.0",
+  "description": "Solidity contracts for Archmage",
+  "main": "index.js",
+  "scripts": {
+    "abis": "ts-node scripts/abis.ts",
+    "compile": "npx hardhat compile",
+    "coverage": "npx hardhat coverage",
+    "test": "npx hardhat test",
+    "test:ci": "cross-env CI=true npx hardhat test > test-results.json",
+    "test:e2e": "cross-env ENABLE_MAINNET_FORKING=true RUN_E2E_TESTS=true npx hardhat test",
+    "test:gas": "cross-env REPORT_GAS=true npx hardhat test",
+    "test:all": "cross-env RUN_ALL_TESTS=true npx hardhat test",
+    "lint": "eslint --config ./.eslintrc --ignore-path ./.eslintignore --ext .ts,.tsx .",
+    "lint:fix": "eslint --fix --config ./.eslintrc --ignore-path ./.eslintignore --ext .ts,.tsx .",
+    "size-contracts": "npx hardhat size-contracts",
+    "prettier-format": "prettier --config .prettierrc './**/*.ts' --write",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Archmage-Finance/archmage-core.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Archmage-Finance/archmage-core/issues"
+  },
+  "homepage": "https://github.com/Archmage-Finance/archmage-core#readme",
+  "dependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^4.3.3",
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "@types/chai": "^4.2.22",
+    "@uniswap/v3-periphery": "^1.3.0",
+    "chai": "^4.3.4",
+    "dotenv": "^10.0.0",
+    "hardhat": "^2.6.8",
+    "hardhat-contract-sizer": "^2.1.1",
+    "hardhat-gas-reporter": "^1.0.4"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@typechain/ethers-v5": "^8.0.2",
+    "@typechain/hardhat": "^3.0.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.11.7",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "chai-bn": "^0.3.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.0.2",
+    "mocha": "^9.1.3",
+    "prettier": "^2.4.1",
+    "solidity-coverage": "^0.7.17",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.11.0",
+    "typechain": "^6.0.2",
+    "typescript": "^4.4.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --cache --fix --config ./.eslintrc --ignore-path ./.eslintignore --ext .ts,.tsx .",
+      "prettier --config .prettierrc './**/*.ts' --write"
+    ]
+  }
+}

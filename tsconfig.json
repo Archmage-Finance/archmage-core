@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "target": "es2018",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@contracts/*" : ["contracts/*"],
+      "@custom-types/*" : ["types/*"], // @types is reserved
+      "@scripts/*" : ["scripts/*"],
+      "@test/*" : ["test/*"],
+    }
+  },
+  "include": [
+    "test/*", "test/**/*",
+    "scripts/*", "scripts/**/*",
+    "./types/contracts/*", "./types/contracts/**/*",
+  ],
+  "exclude": [
+  ],
+  "files": ["./hardhat.config.ts"],
+}
