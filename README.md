@@ -1,5 +1,7 @@
 # Archmage Core
 
+[![Test Report](https://github.com/Archmage-Finance/archmage-core/actions/workflows/test-report.yml/badge.svg?branch=main)](https://github.com/Archmage-Finance/archmage-core/actions/workflows/test-report.yml)
+
 Solidity contracts for Archmage
 
 ## Dependencies
