@@ -1,3 +1,7 @@
 module.exports = {
-    "configureYulOptimizer": true
+    "configureYulOptimizer": true,
+    "skipFiles": [
+        "mocks/WETH9.sol",
+        "mocks/MockERC20.sol"
+    ]
 };
