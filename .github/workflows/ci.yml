@@ -10,7 +10,7 @@ jobs:
       - run: |
           git config --global url."https://".insteadOf ssh://
       - run: npm ci                       # install packages
-      - run: npm run compile              # compile contracts
+      - run: npm run compile:ci           # compile contracts
       - run: npm run test:ci              # run tests
       - uses: actions/upload-artifact@v2  # upload test results
         if: success() || failure()        # run this step even if previous step failed

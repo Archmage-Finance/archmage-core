@@ -6,6 +6,7 @@
   "scripts": {
     "abis": "ts-node scripts/abis.ts",
     "compile": "npx hardhat compile",
+    "compile:ci": "cross-env CI=true NODE_OPTIONS=--max-old-space-size=4096 npx hardhat compile",
     "coverage": "npx hardhat coverage",
     "test": "npx hardhat test",
     "test:ci": "cross-env CI=true NODE_OPTIONS=--max-old-space-size=4096 npx hardhat test > test-results.json",
