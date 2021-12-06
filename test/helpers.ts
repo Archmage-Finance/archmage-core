@@ -121,7 +121,7 @@ export const deployBaseContracts = async () => {
     const pool = new ethers.Contract(expectedAddress, UniswapV3PoolArtifacts.abi, signer) as UniswapV3Pool
     await pool.initialize(encodePriceSqrt(1, 1))
 
-    return { token0, token1, nft, pool }
+    return { token0, token1, nft, pool, factory }
 }
 
 export enum FeeAmount {

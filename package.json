@@ -13,6 +13,7 @@
     "test:e2e": "cross-env ENABLE_MAINNET_FORKING=true RUN_E2E_TESTS=true npx hardhat test",
     "test:gas": "cross-env REPORT_GAS=true npx hardhat test",
     "test:all": "cross-env RUN_ALL_TESTS=true npx hardhat test",
+    "deploy:rinkeby": "npx hardhat run --network rinkeby scripts/deploy-uniswapV3Batcher.js",
     "lint": "eslint --config ./.eslintrc --ignore-path ./.eslintignore --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --config ./.eslintrc --ignore-path ./.eslintignore --ext .ts,.tsx .",
     "size-contracts": "npx hardhat size-contracts",

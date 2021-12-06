@@ -91,6 +91,7 @@ describe('UniswapV3Batcher', () => {
                     amount1Min: toWei('0.5'),
                     deadline: getDeadline(),
                     shouldBurn: true,
+                    shouldClose: true,
                 },
             ])
         ).to.be.revertedWith('Fee too low')
@@ -106,6 +107,7 @@ describe('UniswapV3Batcher', () => {
                         amount1Min: toWei('0.5'),
                         deadline: getDeadline(),
                         shouldBurn: true,
+                        shouldClose: true,
                     },
                 ],
                 override
@@ -210,6 +212,7 @@ describe('UniswapV3Batcher', () => {
                         amount1Min: toWei('0.5'),
                         deadline: getDeadline(),
                         shouldBurn: true,
+                        shouldClose: true,
                     },
                 ]
             )
@@ -250,6 +253,7 @@ describe('UniswapV3Batcher', () => {
                         amount1Min: toWei('0.5'),
                         deadline: getDeadline(),
                         shouldBurn: true,
+                        shouldClose: true,
                     },
                 ],
                 override
@@ -273,6 +277,7 @@ describe('UniswapV3Batcher', () => {
                     amount1Min: toWei((1 * 0.95).toString()),
                     deadline: getDeadline(),
                     shouldBurn: true,
+                    shouldClose: true,
                 })
             }
             await uniswapV3Batcher.connect(userSigner).collectAndClose(params, override)
@@ -293,6 +298,7 @@ describe('UniswapV3Batcher', () => {
                             amount1Min: toWei('1'),
                             deadline: getDeadline(),
                             shouldBurn: true,
+                            shouldClose: true,
                         },
                     ],
                     override
@@ -310,6 +316,7 @@ describe('UniswapV3Batcher', () => {
                             amount1Min: toWei('1'),
                             deadline: 1,
                             shouldBurn: true,
+                            shouldClose: true,
                         },
                     ],
                     override
@@ -348,7 +355,7 @@ describe('UniswapV3Batcher', () => {
                     override
                 )
             )
-                .to.emit(uniswapV3Batcher, 'Mint')
+                .to.emit(uniswapV3Batcher, 'Minted')
                 .withArgs(tokenId)
             tokenIds.push(tokenId)
             expect(await nftPositionManager.tokenOfOwnerByIndex(user, tokenIds.length - 1)).to.be.equal(tokenId)
@@ -433,6 +440,7 @@ describe('UniswapV3Batcher', () => {
                             amount1Min: toWei((1 * 0.95).toString()),
                             deadline: getDeadline(),
                             shouldBurn: true,
+                            shouldClose: true,
                         },
                     ],
                     override
@@ -456,6 +464,7 @@ describe('UniswapV3Batcher', () => {
                     amount1Min: toWei((1 * 0.95).toString()),
                     deadline: getDeadline(),
                     shouldBurn: true,
+                    shouldClose: true,
                 })
             }
             await uniswapV3Batcher.connect(userSigner).collectAndClose(params, override)
@@ -471,6 +480,7 @@ describe('UniswapV3Batcher', () => {
                     amount1Min: toWei((1 * 0.95).toString()),
                     deadline: getDeadline(),
                     shouldBurn: true,
+                    shouldClose: true,
                 })
             }
             await uniswapV3Batcher.connect(userSigner).collectAndClose(params, override)
@@ -554,7 +564,7 @@ describe('UniswapV3Batcher', () => {
                     ],
                     override
                 )
-            ).to.emit(uniswapV3Batcher, 'Mint')
+            ).to.emit(uniswapV3Batcher, 'Minted')
             expect(await nftPositionManager.tokenOfOwnerByIndex(user, 0)).to.be.equal(tokenIds[0])
             expect(await nftPositionManager.tokenOfOwnerByIndex(user, 1)).to.be.equal(tokenIds[1])
             expect(await nftPositionManager.tokenOfOwnerByIndex(user, 2)).to.be.equal(tokenIds[2])
@@ -596,6 +606,7 @@ describe('UniswapV3Batcher', () => {
                     amount1Min: toWei((1 * 0.95).toString()),
                     deadline: getDeadline(),
                     shouldBurn: true,
+                    shouldClose: true,
                 })
             }
 
@@ -637,6 +648,7 @@ describe('UniswapV3Batcher', () => {
                     amount1Min: toWei((1 * 0.95).toString()),
                     deadline: getDeadline(),
                     shouldBurn: true,
+                    shouldClose: true,
                 })
             }
             await uniswapV3Batcher.connect(userSigner).collectAndClose(params, override)
@@ -678,6 +690,7 @@ describe('UniswapV3Batcher', () => {
                             amount1Min: toWei((1 * 0.95).toString()),
                             deadline: getDeadline(),
                             shouldBurn: true,
+                            shouldClose: true,
                         },
                     ],
                     override
@@ -688,6 +701,26 @@ describe('UniswapV3Batcher', () => {
             )
             expect(await nftPositionManager.ownerOf(newTokenId)).to.be.equal(user)
             tokenIds.shift()
+        })
+
+        it('Should rerange with just collect', async () => {
+            await expect(
+                uniswapV3Batcher.connect(userSigner).rerange(
+                    [],
+                    [],
+                    [
+                        {
+                            tokenId: tokenIds[0],
+                            amount0Min: toWei((1 * 0.95).toString()),
+                            amount1Min: toWei((1 * 0.95).toString()),
+                            deadline: getDeadline(),
+                            shouldBurn: false,
+                            shouldClose: false,
+                        },
+                    ],
+                    { value: toWei('0.0005') }
+                )
+            ).to.be.not.reverted
         })
 
         it('Should rerange with multiple mints and collects', async () => {
@@ -738,6 +771,7 @@ describe('UniswapV3Batcher', () => {
                             amount1Min: toWei((1 * 0.95).toString()),
                             deadline: getDeadline(),
                             shouldBurn: true,
+                            shouldClose: true,
                         },
                         {
                             tokenId: tokenIds[1],
@@ -745,6 +779,7 @@ describe('UniswapV3Batcher', () => {
                             amount1Min: toWei((1 * 0.95).toString()),
                             deadline: getDeadline(),
                             shouldBurn: true,
+                            shouldClose: true,
                         },
                     ],
                     override
@@ -769,7 +804,7 @@ describe('UniswapV3Batcher', () => {
 
         it('Should set fee', async () => {
             await expect(uniswapV3Batcher.connect(signer).setFee(toWei('0.002')))
-                .to.emit(uniswapV3Batcher, 'Fee')
+                .to.emit(uniswapV3Batcher, 'FeeSet')
                 .withArgs(toWei('0.0005'), toWei('0.002'))
             expect(await uniswapV3Batcher.fee()).to.be.equal(toWei('0.002'))
         })
