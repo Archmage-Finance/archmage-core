@@ -132,7 +132,7 @@ export enum FeeAmount {
 }
 
 export const TICK_SPACINGS: { [amount in FeeAmount]: number } = {
-    [FeeAmount.ONE]: 2,
+    [FeeAmount.ONE]: 1,
     [FeeAmount.FIVE]: 10,
     [FeeAmount.THIRTY]: 60,
     [FeeAmount.HUNDRED]: 200,
