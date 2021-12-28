@@ -2,6 +2,7 @@
 pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -10,7 +11,7 @@ import "./interfaces/INonfungiblePositionManager.sol";
 
 /// @title Archmage Uniswap V3 Batcher
 /// @notice Helper functions for managing Uniswap V3 positions
-contract UniswapV3Batcher is IUniswapV3Batcher, Ownable {
+contract UniswapV3Batcher is IUniswapV3Batcher, Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     /// @dev Uniswap V3 Position Manager address
@@ -25,7 +26,7 @@ contract UniswapV3Batcher is IUniswapV3Batcher, Ownable {
     }
 
     /// @inheritdoc IUniswapV3Batcher
-    function collect(uint256[] calldata tokenIds) external payable override {
+    function collect(uint256[] calldata tokenIds) external payable override nonReentrant {
         require(msg.value >= fee * tokenIds.length, "Fee too low");
 
         for (uint256 i; i < tokenIds.length; i++) {
@@ -35,14 +36,14 @@ contract UniswapV3Batcher is IUniswapV3Batcher, Ownable {
     }
 
     /// @inheritdoc IUniswapV3Batcher
-    function collectAndClose(CollectParams[] calldata params) public payable override {
+    function collectAndClose(CollectParams[] calldata params) external payable override nonReentrant {
         require(msg.value >= fee * 2 * params.length, "Fee too low");
 
         _collectAndClose(params);
     }
 
     /// @inheritdoc IUniswapV3Batcher
-    function mint(MintParams[] calldata params, BalanceParams[] calldata balances) public payable override returns (uint256[] memory tokenIds) {
+    function mint(MintParams[] calldata params, BalanceParams[] calldata balances) external payable override nonReentrant returns (uint256[] memory tokenIds) {
         require(msg.value >= fee * 4 * params.length, "Fee too low");
 
         tokenIds = _mint(params, balances);
@@ -53,7 +54,7 @@ contract UniswapV3Batcher is IUniswapV3Batcher, Ownable {
         MintParams[] calldata mintParams, 
         BalanceParams[] calldata balances, 
         CollectParams[] calldata collectParams
-    ) external payable override returns (uint256[] memory tokenIds) {
+    ) external payable override nonReentrant returns (uint256[] memory tokenIds) {
         uint256 collectLength;
         uint256 collectAndCloseLength;
         for (uint256 i; i < collectParams.length; i++) {
